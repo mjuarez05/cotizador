@@ -1,0 +1,466 @@
+:root {
+  /* Professional Light Theme for Insurance */
+  --primary: #0891b2;
+  --primary-hover: #0e7490;
+  --secondary: #a855f7;
+  --background: #f8fafc;
+  --text: #334155;
+  --text-muted: #64748b;
+  --border: #cbd5e1;
+  --input-bg: #ffffff;
+  --form-wrapper-bg: #ffffff;
+  --form-wrapper-border: #e2e8f0;
+  --step-inactive-bg: #e0f2fe;
+  --step-inactive-text: #0891b2;
+  --success: #10b981;
+  --error: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: auto;
+  align-items: center;
+  margin: 0;
+  color: var(--text);
+  font-size: 1.5rem;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.title {
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.form-wrapper {
+  background: var(--form-wrapper-bg);
+  border: 1px solid var(--form-wrapper-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 0.5rem;
+}
+
+.step-indicator {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.step-indicator.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+.step-indicator.inactive {
+  background-color: var(--step-inactive-bg);
+  color: var(--step-inactive-text);
+}
+
+.step-indicator.completed {
+  background-color: var(--success);
+  color: white;
+}
+
+.step-line {
+  width: 2rem;
+  height: 2px;
+  background-color: var(--border);
+}
+
+.form-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-content h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-group label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.input-field {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  background-color: var(--input-bg);
+  width: 100%;
+  outline: none;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  color: var(--text);
+}
+
+.input-field::placeholder {
+  color: #94a3b8;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+
+.input-field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+}
+
+.select-field {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  background-color: var(--input-bg);
+  width: 100%;
+  outline: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  color: var(--text);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+  padding-right: 2rem;
+}
+
+.select-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+
+.select-field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  height: 2.5rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 1;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background-color: #f1f5f9;
+  color: var(--text);
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Result card */
+.result-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.result-card h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.result-card .price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Error state */
+.error-message {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Cotización Result */
+.cotizacion-result {
+  width: 100%;
+}
+
+.cotizacion-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cotizacion-header h3 {
+  font-size: 1rem;
+  color: var(--primary);
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.cotizacion-header .vehiculo-info {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+}
+
+.cotizacion-header .localidad-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.planes-container h4 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.plan-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.plan-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.1);
+}
+
+.plan-card:first-of-type {
+  border-color: var(--primary);
+  background: linear-gradient(to right, rgba(8, 145, 178, 0.05), transparent);
+}
+
+.plan-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.plan-titulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.plan-nombre {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 200px;
+}
+
+.plan-precio {
+  text-align: right;
+}
+
+.plan-costo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.wbutton-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6.25rem;
+  height: 6.25rem;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+}
+.whatsapp-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  cursor: pointer;
+  position: relative;
+    &:hover::before {
+    animation: none;
+  }
+}
+.whatsapp-button::before {
+  display: flex;
+  content: " ";
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  border-radius: 100%;
+  z-index: -1;
+  background-color: #25d366;
+  animation: logo 1.5s infinite alternate both;
+
+}
+@keyframes logo {
+  0% {
+    scale: 1;
+    opacity: 50%;
+  }
+  50% {
+    opacity: 100%;
+  }
+  100% {
+    scale: 1.1;
+    opacity: 100%;
+  }
+}

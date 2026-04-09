@@ -7,39 +7,95 @@ type Marca = {
   desc: string;
 };
 
-type Modelo = string
-;
+type Modelo = string;
 
 type Version = {
   codigo: string;
   desc: string;
 };
 
+type Localidad = {
+  id: number;
+  nombre: string;
+  provincia: string;
+  codigo_postal: number;
+};
+
+type VehiculoCotizacion = {
+  id: number;
+  nombre: string;
+  anio: number;
+  valor: number;
+};
+
+type LocalidadCotizacion = {
+  id: number;
+  nombre: string;
+  provincia: string;
+  codigo_postal: number;
+};
+
+type ResultadoCotizacion = {
+  numero: number;
+  producto: string;
+  titulo: string;
+  texto: string;
+  costo: number;
+  desglose: {
+    total: {
+      premio: number;
+    };
+    cuotas: {
+      cuota: number;
+      premio: number;
+    }[];
+  };
+};
+
+type CotizacionResponse = {
+  id: number;
+  vehiculo: VehiculoCotizacion;
+  localidad: LocalidadCotizacion;
+  suma_asegurada: number;
+  resultado: ResultadoCotizacion[];
+};
+
 type FormData = {
-  name: string;
-  email: string;
+  cp: string;
+  localidad: string;
   marca: string;
   modelo: string;
   version: string;
   anio: string;
-  cobertura: string;
+  uso: string;
+  gnc: string;
 };
 
-export default function Form() {
+type Props = {
+  onResultChange: (result: CotizacionResponse | null) => void;
+  onFormDataChange: (formData: FormData) => void;
+};
+
+export default function Form({ onResultChange, onFormDataChange }: Props) {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<CotizacionResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const [marcas, setMarcas] = useState<Marca[]>([]);
   const [modelos, setModelos] = useState<Modelo[]>([]);
   const [versiones, setVersiones] = useState<Version[]>([]);
+  const [localidadesOptions, setLocalidadessOptions] = useState<Localidad[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
+    cp: "",
+    localidad: "",
     marca: "",
     modelo: "",
     version: "",
     anio: "",
-    cobertura: "",
+    uso: "1",
+    gnc: "false",
   });
 
   useEffect(() => {
@@ -69,6 +125,28 @@ export default function Form() {
   }, [formData.marca, formData.anio]);
 
   useEffect(() => {
+    if (formData.cp.length < 4) {
+      setLocalidadessOptions([]);
+      return;
+    }
+
+    async function loadMunicipios() {
+      try {
+        const res = await fetch(`/api/vehiculos/localidades?cp=${formData.cp}`);
+        const data: Localidad[] = await res.json();
+        setLocalidadessOptions(data);
+        // Limpiar selección anterior cuando cambia el CP
+        setFormData((prev) => ({ ...prev, localidad: "" }));
+      } catch (err) {
+        console.error("Error cargando localidades:", err);
+      }
+    }
+
+    const timeoutId = setTimeout(() => loadMunicipios(), 500);
+    return () => clearTimeout(timeoutId);
+  }, [formData.cp]);
+
+  useEffect(() => {
     if (!formData.marca || !formData.modelo || !formData.anio) return;
 
     async function loadVersiones() {
@@ -88,10 +166,11 @@ export default function Form() {
   ) {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => {
+      const newData = { ...prev, [name]: value };
+      onFormDataChange(newData);
+      return newData;
+    });
   }
 
   function nextStep() {
@@ -102,60 +181,137 @@ export default function Form() {
     setStep((prev) => Math.max(prev - 1, 1));
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(formData);
+    setLoading(true);
+    setError(null);
+    setResult(null);
+
+    try {
+      // Buscar la localidad seleccionada para obtener id y cp
+      const localidadSeleccionada = localidadesOptions.find(
+        (loc) => loc.id.toString() === formData.localidad
+      );
+
+      if (!localidadSeleccionada) {
+        throw new Error("Debe seleccionar una localidad");
+      }
+
+      const res = await fetch("/api/vehiculos/cotizacion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          infoauto: parseInt(formData.version),
+          anio: parseInt(formData.anio),
+          uso: parseInt(formData.uso),
+          gnc: formData.gnc === "true",
+          localidad: {
+            id: localidadSeleccionada.id,
+            codigo_postal: localidadSeleccionada.codigo_postal,
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al cotizar");
+      }
+
+      const data = await res.json();
+      setResult(data);
+      onResultChange(data);
+      onFormDataChange(formData);
+    } catch (err) {
+      setError("No se pudo obtener la cotización. Intenta de nuevo.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-linear-120 from-slate-100 to-slate-400 border-0 border-cyan-100 border-t-cyan-500 border-l-cyan-500
-      backdrop-blur-sm rounded-2xl p-10 md:min-w-130 min-w-72
-      m-10 shadow-[20px_20px_20px_rgba(0,0,0,0.5),-20px_-20px_100px_rgba(255,255,255,0.4)] text-sm
-      flex flex-col h-120 relative
-      before:content-[''] before:absolute before:w-[120%] before:h-[120%]
-      before:border-2 before:border-dashed before:border-[black/80] before:pointer-events-none before:rounded-3xl
-      before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2"
-    >
-      {/* indicadores */}
-      <div className="flex justify-center items-center mb-6">
+    <form className="form-wrapper" onSubmit={handleSubmit}>
+      <div className="step-indicators">
         {[1, 2, 3].map((s) => (
           <span
             key={s}
-            className={`w-10 h-10 m-2 flex justify-center items-center rounded-full
-            ${step >= s ? "bg-cyan-600 text-white" : "bg-cyan-100"}`}
+            className={`step-indicator ${step >= s ? "active" : "inactive"}`}
           >
             {s}
           </span>
         ))}
       </div>
 
-      {/* contenido */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-5">
-        {step === 1 && (
+      <div className="form-content">
+        {loading && (
+          <div className="loading">
+            <div className="spinner"></div>
+          </div>
+        )}
+
+        {error && <div className="error-message">{error}</div>}
+
+        {result && !loading && (
+          <div className="cotizacion-result">
+            <div className="cotizacion-header">
+              <h3>Cotización #{result.id}</h3>
+              <p className="vehiculo-info">
+                {result.vehiculo.nombre} ({result.vehiculo.anio})
+              </p>
+              <p className="localidad-info">
+                {result.localidad.nombre}, {result.localidad.provincia} - CP {result.localidad.codigo_postal}
+              </p>
+            </div>
+
+            <div className="planes-container">
+              <h4>Planes disponibles</h4>
+              {result.resultado.map((plan) => (
+                <div key={plan.numero} className="plan-card">
+                  <div className="plan-header">
+                    <span className="plan-titulo">{plan.titulo}</span>
+                    <span className="plan-nombre">{plan.texto}</span>
+                  </div>
+                  <div className="plan-precio">
+                    <span className="plan-costo">${plan.costo.toLocaleString("es-AR")}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!loading && !result && step === 1 && (
           <>
-            <h2>Datos personales</h2>
+            <h2>Ubicación</h2>
 
             <input
-              name="name"
-              placeholder="Nombre"
-              value={formData.name}
+              name="cp"
+              placeholder="Código Postal"
+              value={formData.cp}
               onChange={handleChange}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0"
+              className="input-field"
             />
 
-            <input
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0"
-            />
+            
+              <select
+                name="localidad"
+                value={formData.localidad}
+                onChange={handleChange}
+                className="select-field"
+              >
+                <option value="">Seleccionar localidad</option>
+                {localidadesOptions.map((loc) => (
+                  <option key={loc.id} value={loc.id}>
+                    {loc.nombre} - {loc.provincia}
+                  </option>
+                ))}
+              </select>
+            
           </>
         )}
 
-        {step === 2 && (
+        {!loading && !result && step === 2 && (
           <>
             <h2>Datos del vehículo</h2>
 
@@ -164,14 +320,14 @@ export default function Form() {
               placeholder="Año"
               value={formData.anio}
               onChange={handleChange}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0"
+              className="input-field"
             />
 
             <select
               name="marca"
               value={formData.marca}
               onChange={handleChange}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0"
+              className="select-field"
             >
               <option value="">Seleccionar marca</option>
               {marcas.map((marca, index) => (
@@ -186,11 +342,11 @@ export default function Form() {
               value={formData.modelo}
               onChange={handleChange}
               disabled={!modelos.length}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0 disabled:opacity-50 "
+              className="select-field"
             >
               <option value="">Seleccionar modelo</option>
-              {modelos.map((modelo,index) => (
-                <option key={index} value={modelo} className="text-black">
+              {modelos.map((modelo, index) => (
+                <option key={index} value={modelo}>
                   {modelo}
                 </option>
               ))}
@@ -201,7 +357,7 @@ export default function Form() {
               value={formData.version}
               onChange={handleChange}
               disabled={!versiones.length}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0 disabled:opacity-50"
+              className="select-field"
             >
               <option value="">Seleccionar versión</option>
               {versiones.map((version) => (
@@ -213,52 +369,97 @@ export default function Form() {
           </>
         )}
 
-        {step === 3 && (
+        {!loading && !result && step === 3 && (
           <>
-            <h2>Tipo de cobertura</h2>
+            <h2>Uso del vehículo</h2>
 
             <select
-              name="cobertura"
-              value={formData.cobertura}
+              name="uso"
+              value={formData.uso}
               onChange={handleChange}
-              className="border-mauve-500 border rounded-xl p-2 bg-mauve-50 w-2xs outline-0"
+              className="select-field"
             >
-              <option value="">Seleccionar</option>
-              <option value="basic">Responsabilidad civil</option>
-              <option value="full">Todo riesgo</option>
+              <option value="1">Particular</option>
+              <option value="2">Comercial</option>
             </select>
+
+            <div className="checkbox-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="gnc"
+                  checked={formData.gnc === "true"}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      gnc: e.target.checked ? "true" : "false",
+                    }))
+                  }
+                />
+                <span>¿Tiene GNC?</span>
+              </label>
+            </div>
           </>
         )}
       </div>
 
-      {/* botones */}
-      <div className="flex justify-center gap-5 mt-6">
-        {step > 1 && (
+      <div className="form-actions">
+        {result && (
+          <button
+            type="button"
+            onClick={() => {
+              const resetData = {
+                cp: "",
+                localidad: "",
+                marca: "",
+                modelo: "",
+                version: "",
+                anio: "",
+                uso: "1",
+                gnc: "false",
+              };
+              setResult(null);
+              setStep(1);
+              setFormData(resetData);
+              setLocalidadessOptions([]);
+              onResultChange(null);
+              onFormDataChange(resetData);
+            }}
+            className="btn"
+          >
+            Nueva cotización
+          </button>
+        )}
+
+        {!result && step > 1 && (
           <button
             type="button"
             onClick={prevStep}
-            className="rounded-xl h-10 bg-cyan-700 text-cyan-50 hover:bg-cyan-600 w-30"
+            className="btn"
+            disabled={loading}
           >
             Volver
           </button>
         )}
 
-        {step < 3 && (
+        {!result && step < 3 && (
           <button
             type="button"
             onClick={nextStep}
-            className="rounded-xl h-10 bg-cyan-700 text-cyan-50 hover:bg-cyan-600 w-30"
+            className="btn"
+            disabled={loading}
           >
             Siguiente
           </button>
         )}
 
-        {step === 3 && (
+        {!result && step === 3 && (
           <button
             type="submit"
-            className="rounded-xl h-10 bg-cyan-700 text-cyan-50 hover:bg-cyan-600 w-30"
+            className="btn"
+            disabled={loading}
           >
-            Cotizar
+            {loading ? "Cotizando..." : "Cotizar"}
           </button>
         )}
       </div>
