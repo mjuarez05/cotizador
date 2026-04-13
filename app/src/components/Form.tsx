@@ -97,7 +97,7 @@ export default function Form({ onResultChange, onFormDataChange }: Props) {
     uso: "1",
     gnc: "false",
   });
-
+console.log(result)
   useEffect(() => {
     async function loadMarcas() {
       const res = await fetch("/api/vehiculos/marcas");

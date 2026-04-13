@@ -40,6 +40,120 @@ async function mercantilPost(endpoint: string, body: unknown) {
   return res.json();
 }
 
+// ============ COTIZACIONES ============
+
+// Response when getting ALL cotizaciones
+export type CotizacionesListResponse = {
+  usuario: string;
+  offset: number;
+  limit: number;
+  total: number;
+  datos: CotizacionListItem[];
+  numitems: number;
+};
+
+// Item when getting list
+export type CotizacionListItem = {
+  id: number;
+  rama: number;
+  bien: string;
+  ubicacion: string;
+  fecha: string;
+  subrama: number;
+};
+
+// Full cotizacion details
+export type CotizacionDetail = {
+  id: number;
+  rama: number;
+  localidad: {
+    id: number;
+    nombre: string;
+    provincia: string;
+    codigo_postal: number;
+  };
+  vehiculo: {
+    id: number;
+    nombre: string;
+    anio: number;
+    valor: number;
+    uso: number;
+    gnc: boolean;
+    infoauto: number;
+    rastreo: number;
+  };
+  suma_asegurada: number;
+  iva: number;
+  ajuste_suma: number;
+  desglose: boolean;
+  periodo: number;
+  cuotas: number;
+  comision: number;
+  bonificacion: number;
+  bonificacion_extraordinaria: number;
+  productor: {
+    id: number;
+    nombre: string;
+  };
+  cantidad: number;
+  resultado: CotizacionResultado[];
+  guardar: boolean;
+  advertencia: {
+    codigo: string;
+    descripcion: string;
+    detalle: [];
+  };
+  fecha_cotizacion: string;
+  pago: {
+    tipo_pago: string;
+    canal: number | null;
+    codigo: number | null;
+  };
+};
+
+export type CotizacionResultado = {
+  numero: number | null;
+  puntaje: number;
+  producto: string;
+  texto: string;
+  titulo: string;
+  descripcion: string;
+  costo: number;
+  cantidad_cuotas: number;
+  desglose: {
+    total: {
+      cuota: number | null;
+      premio: number;
+    };
+    cuotas: {
+      cuota: number | null;
+      premio: number;
+    }[];
+  };
+  error: string;
+  franquicia: number | null;
+  codigo_producto: number;
+  adicional: {
+    granizo: boolean;
+  };
+  inspeccion: {
+    opciones: {
+      id: number | null;
+      descripcion: string | null;
+    }[];
+  };
+};
+
+export async function getCotizaciones(): Promise<CotizacionesListResponse> {
+  return mercantilFetch("/cotizaciones/v2/");
+}
+
+export async function getCotizacion(id: number): Promise<CotizacionDetail> {
+  return mercantilFetch(`/cotizaciones/v2/${id}`);
+}
+
+// ============ VEHÍCULOS ============
+
 export async function getMarcas() {
   return mercantilFetch("/vehiculos/v1/marcas");
 }
@@ -75,8 +189,8 @@ type CotizacionResponse = {
 export async function cotizarVehiculo(params: CotizacionParams): Promise<CotizacionResponse> {
   const config = {
     canal: 81,
-    comision: 10,
-    bonificacion: 0,
+    comision: 20,
+    bonificacion: 30,
     periodo: 1,
     cuotas: 1,
     pago: {

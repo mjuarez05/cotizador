@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Form from "./components/Form";
-import WhatsappButton from "./components/WhatsappButton";
+import Form from "./src/components/Form";
+import WhatsappButton from "./src/components/WhatsappButton";
 
 type ResultadoCotizacion = {
   numero: number;
@@ -65,6 +65,8 @@ export default function Home() {
 
   return (
     <main className="container">
+      <div className="deco1"></div>
+      <div className="deco2"></div>
       <h1 className="title">Cotizador online</h1>
       <Form onResultChange={setResult} onFormDataChange={setFormData} />
       <WhatsappButton result={result} formData={formData} />
