@@ -65,9 +65,11 @@ export default function Home() {
 
   return (
     <main className="container">
+      <div className="background-image"></div>
       <div className="deco1"></div>
       <div className="deco2"></div>
-      <h1 className="title">Cotizador online</h1>
+      <h1 className="title">Cotizador Online</h1>
+      <p className="subtitle">Protegé tu vehículo con las mejores coberturas del mercado</p>
       <Form onResultChange={setResult} onFormDataChange={setFormData} />
       <WhatsappButton result={result} formData={formData} />
     </main>

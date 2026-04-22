@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="500" height="500" version="1.1" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="300" height="300" version="1.1" viewBox="100 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
  <defs>
   <linearGradient id="linearGradient27644">
    <stop stop-color="#55d9d9" offset="0"/>
@@ -18,10 +18,5 @@
    <circle transform="rotate(-24.438)" cx="204.83" cy="252.39" r="31.832" fill="url(#linearGradient27768)"/>
   </g>
  </g>
- <text transform="scale(.98495 1.0153)" x="2.4306788" y="329.54581" fill="#000000" font-size="55.471px" stroke-width="0" xml:space="preserve"><tspan x="2.4306788" y="329.54581" font-family="Cinzel" stroke-width="0">Biotti Michellini</tspan></text>
- <g fill="none">
-  <path d="m9.5134 373.65h483.93" stroke="#000" stroke-width="1.951"/>
-  <path d="m9.5134 259.34h483.93" stroke="#000" stroke-width="1.951"/>
-  <text transform="scale(.96776 1.0333)" x="194.38029" y="398.724" font-family="Cinzel" font-size="30.489px" stroke="#000000" stroke-width=".39199" xml:space="preserve"><tspan x="194.38029" y="398.724" fill="#000000" font-family="Cinzel" stroke-width=".39199">Seguros</tspan></text>
- </g>
+
 </svg>
