@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Form from "./src/components/Form";
 import WhatsappButton from "./src/components/WhatsappButton";
+import InfiniteCarousel from "./src/components/InfiniteCarousel";
 
 type ResultadoCotizacion = {
   numero: number;
@@ -71,6 +72,11 @@ export default function Home() {
       <h1 className="title">Cotizador Online</h1>
       <p className="subtitle">Protegé tu vehículo con las mejores coberturas del mercado</p>
       <Form onResultChange={setResult} onFormDataChange={setFormData} />
+      <InfiniteCarousel
+        logos={[
+          "/logos/mercantil.png",
+        ]}
+      />
       <WhatsappButton result={result} formData={formData} />
     </main>
   );
