@@ -8,7 +8,7 @@ type Props = {
   speed?: number;
 };
 
-export default function InfiniteCarousel({ logos, speed = 30 }: Props) {
+export default function InfiniteCarousel({ logos, speed = 10 }: Props) {
   const duplicatedLogos = [...logos, ...logos, ...logos];
 
   return (

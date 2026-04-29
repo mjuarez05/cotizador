@@ -1,6 +1,7 @@
 .carouselContainer {
   overflow: hidden;
   width: 100%;
+  max-width: 800px;
   height: 80px;
   max-height: 80px;
   padding: 1rem 0;

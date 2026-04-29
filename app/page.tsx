@@ -75,6 +75,7 @@ export default function Home() {
       <InfiniteCarousel
         logos={[
           "/logos/mercantil.png",
+          "/logos/color-ss.svg"
         ]}
       />
       <WhatsappButton result={result} formData={formData} />
