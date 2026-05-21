@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { NormalizedQuoteResult } from "@/lib/types/domain";
 
 type Props = {
-  result: any | null;
+  result: { quotes: NormalizedQuoteResult[]; errors: any[] } | null;
   formData: {
     cp: string;
     localidad: string;
@@ -18,13 +19,14 @@ export default function WhatsappButton({ result, formData }: Props) {
 
   let mensaje = "";
 
-  if (result) {
+  if (result && result.quotes.length > 0) {
+    const quotes = result.quotes;
     mensaje = `
-Hola, quiero consultar por esta cotización:
-N° Cotización: ${result.id}
+Hola, quiero consultar por estas cotizaciones:
 CP: ${formData.cp}
-Localidad: ${formData.localidad || result.localidad.nombre}
-Vehículo: ${result.vehiculo.nombre} (${result.vehiculo.anio})
+Vehículo: ${formData.marca || "-"} ${formData.modelo || "-"} (${formData.anio || "-"})
+
+${quotes.map((q, i) => `${i + 1}. ${q.providerName} - ${q.productName}: $${q.premium}`).join("\n")}
 `;
   } else {
     mensaje = `

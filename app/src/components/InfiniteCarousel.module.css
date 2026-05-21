@@ -7,7 +7,7 @@
   padding: 1rem 0;
   display: flex;
   align-items: center;
-  margin: 30px 0px
+  margin: 30px 0px;
 }
 
 .carouselTrack {
@@ -18,24 +18,32 @@
 
 .carouselItem {
   flex-shrink: 0;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80px;
-  max-height: 80px;
+  height: 150px;
+}
+
+.logoWrapper {
+  display: flex;
+  position: relative;
+  width: 130px;
+  height: 90px;
+  box-sizing: border-box;
 }
 
 .carouselLogo {
-  object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.7;
+  object-fit: contain !important;
+  filter: saturate(0%) brightness(1000%);
+  opacity: 0.9;
   transition: all 0.3s ease;
 }
 
 .carouselLogo:hover {
-  filter: grayscale(0%);
+  filter: saturate(100%) brightness(100%);
   opacity: 1;
+  background-color: #ffffff80;
 }
 
 @keyframes scroll-left {

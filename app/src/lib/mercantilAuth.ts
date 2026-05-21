@@ -6,7 +6,7 @@ export async function getMercantilToken() {
     return cachedToken;
   }
 
-  const res = await fetch("https://apidev.mercantilandina.com.ar/credenciales/v2/", {
+  const res = await fetch("https://api.mercantilandina.com.ar/credenciales/v2/", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -16,7 +16,6 @@ export async function getMercantilToken() {
       client_id: process.env.API_CLIENT_ID!,
       username: process.env.API_USER!,
       password: process.env.API_PASSWORD!,
-      grant_type: "password",
     }),
   });
 

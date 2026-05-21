@@ -5,40 +5,9 @@ import Form from "./src/components/Form";
 import WhatsappButton from "./src/components/WhatsappButton";
 import InfiniteCarousel from "./src/components/InfiniteCarousel";
 
-type ResultadoCotizacion = {
-  numero: number;
-  producto: string;
-  titulo: string;
-  texto: string;
-  costo: number;
-  desglose: {
-    total: {
-      premio: number;
-    };
-    cuotas: {
-      cuota: number;
-      premio: number;
-    }[];
-  };
-};
-
-type CotizacionResponse = {
-  id: number;
-  vehiculo: {
-    id: number;
-    nombre: string;
-    anio: number;
-    valor: number;
-  };
-  localidad: {
-    id: number;
-    nombre: string;
-    provincia: string;
-    codigo_postal: number;
-  };
-  suma_asegurada: number;
-  resultado: ResultadoCotizacion[];
-};
+import { NormalizedQuoteResult } from "./src/lib/types/domain";
+import Image from "next/image";
+import logo from "../public/biotti.svg"
 
 type FormData = {
   cp: string;
@@ -51,8 +20,13 @@ type FormData = {
   gnc: string;
 };
 
+type HomeResult = {
+  quotes: NormalizedQuoteResult[];
+  errors: { provider: string; error: string }[];
+} | null;
+
 export default function Home() {
-  const [result, setResult] = useState<CotizacionResponse | null>(null);
+  const [result, setResult] = useState<HomeResult>(null);
   const [formData, setFormData] = useState<FormData>({
     cp: "",
     localidad: "",
@@ -67,15 +41,25 @@ export default function Home() {
   return (
     <main className="container">
       <div className="background-image"></div>
-      <div className="deco1"></div>
+      <div className="deco1">
+        <Image src={logo} width={100} height={100} alt="Biotti" />
+        <p className="biotti">Biotti Michellini</p>
+      </div>
       <div className="deco2"></div>
       <h1 className="title">Cotizador Online</h1>
-      <p className="subtitle">Protegé tu vehículo con las mejores coberturas del mercado</p>
+      <p className="subtitle">Cotizá en tres pasos y sin datos personales</p>
       <Form onResultChange={setResult} onFormDataChange={setFormData} />
+      {/* <div className="descuento">
+        <Image src={}/>
+      </div> */}
       <InfiniteCarousel
         logos={[
           "/logos/mercantil.png",
-          "/logos/color-ss.svg"
+          "/logos/color-ss.svg",
+          "/logos/Allianz.svg.png",
+          "/logos/atm-2.webp",
+          "/logos/Logo-NS-2025.png",
+          "/logos/logo_2027078645_2011.png",
         ]}
       />
       <WhatsappButton result={result} formData={formData} />

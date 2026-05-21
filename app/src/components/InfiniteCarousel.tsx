@@ -8,7 +8,7 @@ type Props = {
   speed?: number;
 };
 
-export default function InfiniteCarousel({ logos, speed = 10 }: Props) {
+export default function InfiniteCarousel({ logos, speed = 30 }: Props) {
   const duplicatedLogos = [...logos, ...logos, ...logos];
 
   return (
@@ -19,14 +19,15 @@ export default function InfiniteCarousel({ logos, speed = 10 }: Props) {
       >
         {duplicatedLogos.map((logo, index) => (
           <div key={index} className={styles.carouselItem}>
-            <Image
-              src={logo}
-              alt={`Sponsor ${index}`}
-              width={120}
-              height={60}
-              className={styles.carouselLogo}
-              style={{ height: "60px", width: "auto" }}
-            />
+            <div className={styles.logoWrapper}>
+              <Image
+                src={logo}
+                alt={`Sponsor ${index}`}
+                fill
+                className={styles.carouselLogo}
+                sizes="120px"
+              />
+            </div>
           </div>
         ))}
       </div>
