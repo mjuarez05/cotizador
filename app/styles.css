@@ -99,6 +99,12 @@ body {
   font-family: "Cinzel", serif;
   font-weight: 500;
   border-top: 2px solid black;
+  font-size: 1.5rem;
+}
+.seguros {
+   font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .deco2 {

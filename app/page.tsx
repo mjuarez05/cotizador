@@ -42,8 +42,9 @@ export default function Home() {
     <main className="container">
       <div className="background-image"></div>
       <div className="deco1">
-        <Image src={logo} width={100} height={100} alt="Biotti" />
+        <Image src={logo} width={80} height={80} alt="Biotti" />
         <p className="biotti">Biotti Michellini</p>
+        <small className="seguros">SEGUROS</small>
       </div>
       <div className="deco2"></div>
       <h1 className="title">Cotizador Online</h1>
@@ -55,11 +56,13 @@ export default function Home() {
       <InfiniteCarousel
         logos={[
           "/logos/mercantil.webp",
+           "/logos/sancristobal.webp",
           "/logos/color-ss1.svg",
           "/logos/Allianz.webp",
-          "/logos/atm-2.webp",
           "/logos/Nacion.webp",
-          "/logos/sancristobal.webp",
+          "/logos/atm-2.webp",
+          
+         
         ]}
       />
       <WhatsappButton result={result} formData={formData} />
