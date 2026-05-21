@@ -266,15 +266,19 @@ export default function Form({ onResultChange, onFormDataChange }: Props) {
                 ))}
               </div>
             )}
-            <div className="hogar-card">
+            <a
+              href="https://wa.me/5493406461881?text=Quiero%20bonificar%20el%20seguro%20de%20mi%20auto%20contratando%20un%20seguro%20hogar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hogar-card"
+            >
               <div className="hogar-image-wrapper">
-                <Image src="/familia.jfif" alt="Familia" fill className="hogar-image" />
+                <Image src="/familia.webp" alt="Familia" fill className="hogar-image" />
               </div>
               <div className="hogar-text">
                 <p>Hacé click acá y bonificá el seguro de tu auto contratando un seguro de Hogar</p>
               </div>
-              {/* <button className="btn">Bonificar</button> */}
-            </div>
+            </a>
             <div className="planes-container">
               <h4>Planes disponibles</h4>
               {result.quotes.map((q, i) => (
@@ -419,7 +423,7 @@ export default function Form({ onResultChange, onFormDataChange }: Props) {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <Image src="/chica.png" alt="Mujer" width={100} height={100} className="chica"/>
+            <Image src="/chica.webp" alt="Mujer" width={100} height={100} className="chica"/>
             <h3 className="modal-title">Estás a un paso de tu cotización</h3>
 
             <p className="modal-message">

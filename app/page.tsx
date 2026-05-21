@@ -54,12 +54,12 @@ export default function Home() {
       </div> */}
       <InfiniteCarousel
         logos={[
-          "/logos/mercantil.png",
+          "/logos/mercantil.webp",
           "/logos/color-ss.svg",
-          "/logos/Allianz.svg.png",
+          "/logos/Allianz.webp",
           "/logos/atm-2.webp",
-          "/logos/Logo-NS-2025.png",
-          "/logos/logo_2027078645_2011.png",
+          "/logos/Nacion.webp",
+          "/logos/sancristobal.webp",
         ]}
       />
       <WhatsappButton result={result} formData={formData} />
