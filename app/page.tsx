@@ -55,7 +55,7 @@ export default function Home() {
       <InfiniteCarousel
         logos={[
           "/logos/mercantil.webp",
-          "/logos/color-ss.svg",
+          "/logos/color-ss1.svg",
           "/logos/Allianz.webp",
           "/logos/atm-2.webp",
           "/logos/Nacion.webp",
