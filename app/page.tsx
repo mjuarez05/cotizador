@@ -7,7 +7,7 @@ import InfiniteCarousel from "./src/components/InfiniteCarousel";
 
 import { NormalizedQuoteResult } from "./src/lib/types/domain";
 import Image from "next/image";
-import logo from "../public/biotti.svg"
+import logo from "../public/logobiotti.webp"
 
 type FormData = {
   cp: string;
@@ -42,9 +42,9 @@ export default function Home() {
     <main className="container">
       <div className="background-image"></div>
       <div className="deco1">
-        <Image src={logo} width={80} height={80} alt="Biotti" />
-        <p className="biotti">Biotti Michellini</p>
-        <small className="seguros">SEGUROS</small>
+        <Image src={logo} width={250} height={200} alt="Biotti" className="biotti"/>
+        {/* <p className="biotti">Biotti Michellini</p>
+        <small className="seguros">SEGUROS</small> */}
       </div>
       <div className="deco2"></div>
       <h1 className="title">Cotizador Online</h1>

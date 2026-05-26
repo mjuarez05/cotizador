@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function WhatsappButton({ result, formData }: Props) {
-  const telefono = "5493406461881";
+  const telefono = "5493406518069";
 
   let mensaje = "";
 

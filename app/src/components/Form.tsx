@@ -267,7 +267,7 @@ export default function Form({ onResultChange, onFormDataChange }: Props) {
               </div>
             )}
             <a
-              href="https://wa.me/5493406461881?text=Quiero%20bonificar%20el%20seguro%20de%20mi%20auto%20contratando%20un%20seguro%20hogar"
+              href="https://wa.me/5493406518069?text=Quiero%20bonificar%20el%20seguro%20de%20mi%20auto%20contratando%20un%20seguro%20hogar"
               target="_blank"
               rel="noopener noreferrer"
               className="hogar-card"

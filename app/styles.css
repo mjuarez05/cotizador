@@ -83,22 +83,24 @@ body {
 .deco1 {
   top: 0px;
   left: 0px;
-  background-color: whitesmoke;
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   opacity: 0.9;
-  height: 150px;
+  height: 220px;
   width: 100%;
-  border-radius: 0px 0px 30px 30px;
+  border-radius: 0px 0px 100% 100%;
 }
 .biotti {
   padding: 0;
   margin: 0;
+  width: 250px;
+  height: auto;
+  object-fit: cover;
   font-family: "Cinzel", serif;
   font-weight: 500;
-  border-top: 2px solid black;
   font-size: 1.5rem;
 }
 .seguros {
